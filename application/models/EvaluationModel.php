@@ -12,12 +12,12 @@ class EvaluationModel extends CI_Model {
 		return  $query->row();
 	}
 
-
 	public function getResults(){
-		$query = $this->db->get('result');
+	  $sql_eval_exist = "SELECT DISTINCT `rating` IS NOT NULL FROM `evaluation` WHERE evaluation.id_result=result.id_result";
+	  $sql = "SELECT result.id_result,result.title, ($sql_eval_exist) AS is_eval FROM `result`";	
+		$query = $this->db->query($sql);
 		return  $query->result();
 	}
-
 
 	public function getQuestion($id_questionnaire,$place){
 		$query = $this->db->get_where('question', array(
