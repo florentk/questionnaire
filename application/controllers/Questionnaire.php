@@ -55,7 +55,7 @@ class Questionnaire extends CI_Controller {
 	    $this->load->helper('form');
 			$this->load->view('test',$data);
 		}else{
-			$data['scores'] = $this->EvaluationModel->computeScores($rating);
+			$data['scores'] = array_slice($this->EvaluationModel->computeScores($rating), 0, 3);
 
 			$this->load->view('test_end',$data);
 		}
@@ -124,7 +124,7 @@ class Questionnaire extends CI_Controller {
 			$rating = array();
 			foreach ($choices as $c){
 				$rate = $this->input->post("$c->id_choice");
-				
+				//echo "<p>".$rate."</p>";
 				if(isset($rate)){
 					$rating += array("$c->id_choice" => $rate);
 				} 		

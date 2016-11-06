@@ -74,12 +74,10 @@ class EvaluationModel extends CI_Model {
 		  $rating = $eval->rating;
 		  $rank = $ranks[$eval->id_choice];
 		  
-		  
-		  
-		  if($rank > 0 && $rank < 4) {
+		  if(isset($rank) && $rank > 0 && $rank < 4) {
 		    $s = (4 - $rank) *  $rating;
 		    $score += $s;
-		    echo "(".$s.",".(4 - $rank).",".$rating." ".")";
+		    //echo "(".$s.",".(4 - $rank).",".$rating." ".")";
 		  }
     } 
     return $score;
