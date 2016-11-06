@@ -10,21 +10,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <?php echo form_open('questionnaire/save_test'); ?>
 
-    <table>
-		    <tr>
-			    <th class="pos">Position</th>			
-			    <th class="title">Question</th>
-		    </tr>
+    <ul>
 	       
 	
       <?php foreach ($choices as $c):?>
-	      <tr>
-			    <td class="pos"> <?php echo form_input((string)$c->id_choice, '0'); ?> </td>		
-			    <td class="title"> <?php echo $c->title; ?> </td>
-        </tr>
+	      <li>
+			     <?php echo form_input((string)$c->id_choice, '0'); ?> <span class="title"> <?php echo $c->title; ?> </span>
+        </li>
       <?php endforeach;?>  	
 	
-    </table>
+    </ul>
 
     <?php
 
