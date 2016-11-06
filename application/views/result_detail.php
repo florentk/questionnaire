@@ -1,13 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
-<html lang="fr">
-<head>
-	<meta charset="utf-8">
-	<link href="<?php echo base_url("assets/css/evaluation.css"); ?>" rel="stylesheet">
-	<title><?php echo $title ; ?></title>
-</head>
-<body>
+?>
 
 
 <h2><?php echo "$rdb->name" ?></h2>
@@ -22,5 +15,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <li>  <b> Allocations </b> : <?php echo "$rdb->allocations" ?> </li>    
     <li>  <b> Liens </b> : <?php echo "$rdb->links" ?> </li>    
 <ul>
-</body>
-</html>
+

@@ -8,6 +8,9 @@ application/language/
 application/libraries/
 application/logs/
 application/third_party/
+assets/css/*bootstrap*
+assets/js/*bootstrap*
+assets/js/*jquery*
 system/
 user_guide/
 index.php

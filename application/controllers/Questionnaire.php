@@ -8,7 +8,7 @@ class Questionnaire extends CI_Controller {
   {
     parent::__construct();
     $this->load->model('EvaluationModel');
-	$this->load->helper('url');
+	  $this->load->helper('url');
   }
 
   private function view_evaluation($id_result,$n_question) {
@@ -16,8 +16,10 @@ class Questionnaire extends CI_Controller {
 		$result = $this->EvaluationModel->getResult($id_result);
 		$question = $this->EvaluationModel->getQuestion(2,$n_question);
 
-		$data['title'] = "Questionnaire pour un Revenu de base";
-		$data['result'] = $result;		
+		$data['title'] = "Evaluation d'un Revenu de base";
+		$data['result'] = $result;	
+		
+		$this->load->view('header',$data);	
 		
 		if(isset($question)){
 			$choices = $this->EvaluationModel->getChoicesFromQuestion($question->id_question);
@@ -30,6 +32,8 @@ class Questionnaire extends CI_Controller {
 		}else{
 			$this->load->view('evaluation_end',$data);
 		}
+		
+		$this->load->view('footer',$data);
 
 	}
 	
@@ -40,25 +44,34 @@ class Questionnaire extends CI_Controller {
 		$data['title'] = "Questionnaire pour un Revenu de base";	
 		$data['rating'] = $rating;
 		
+	  $this->load->view('header',$data);
+		
 		if(isset($question)){
 			$choices = $this->EvaluationModel->getChoicesFromQuestion($question->id_question);
 		
 			$data['question'] = $question;
 			$data['choices'] = $choices	;		
 			
-	  		$this->load->helper('form');
+	    $this->load->helper('form');
 			$this->load->view('test',$data);
 		}else{
 			$data['scores'] = $this->EvaluationModel->computeScores($rating);
 
 			$this->load->view('test_end',$data);
 		}
+		
+		$this->load->view('footer',$data);
 
 	}	
 	
 	public function choose_evaluation() {
+	
 		$data['result'] = $this->EvaluationModel->getResults();
+		$data["title"] = "Evaluation d'un revenu de base";
+		
+		$this->load->view('header',$data);
 		$this->load->view('choose_evaluation',$data);
+		$this->load->view('footer');		
 	}
 	
 	//index.php/questionnaire/evaluation/?id_result=N
@@ -75,20 +88,25 @@ class Questionnaire extends CI_Controller {
 	//index.php/questionnaire/test/
 	public function test()
 	{
-		$this->view_test(1);
+		$this->view_test(1);	
 	}	
 	
 	public function rdb_detail() 
 	{
 		$id_rdb_result = $this->input->get("id_rdb_result");	
-		$data["rdb"] = $this->EvaluationModel->getResultDetail($id_rdb_result);
+		$detail = $this->EvaluationModel->getResultDetail($id_rdb_result);
+		
+		$data["rdb"] = $detail;
+		$data["title"] = "Detail de $detail->name par $detail->supporting";
+		
+		$this->load->view('header',$data);
 		$this->load->view('result_detail',$data);
+		$this->load->view('footer');		
 	}
 
 	//index.php
 	public function index()
 	{
-
 		show_404();
 	}
 	
@@ -108,7 +126,6 @@ class Questionnaire extends CI_Controller {
 				$rate = $this->input->post("$c->id_choice");
 				
 				if(isset($rate)){
-					echo $rate."<br/>";	
 					$rating += array("$c->id_choice" => $rate);
 				} 		
 			}
@@ -133,7 +150,6 @@ class Questionnaire extends CI_Controller {
 				$eval = $this->input->post("$c->id_choice");
 				
 				if(isset($eval)){
-					echo $eval."<br/>";	
 					$this->EvaluationModel->setEvaluation($id_result,$c->id_choice,(int) $eval);
 				} else {
 					$this->view_evaluation($id_result,$n_question);
