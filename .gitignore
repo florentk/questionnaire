@@ -1,0 +1,13 @@
+application/.htaccess
+application/cache/
+application/core/
+application/helpers/
+application/hooks/
+application/index.html
+application/language/
+application/libraries/
+application/logs/
+application/third_party/
+system/
+user_guide/
+index.php

@@ -1,0 +1,17 @@
+th.title {
+		width: 98%;
+}
+
+th.pos {
+	width: 2%;
+	text-align: center;
+}
+
+td.pos {
+	width: 2%;
+	text-align: center;
+}
+
+td.pos input{
+	width: 10px;
+}
