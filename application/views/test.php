@@ -23,13 +23,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           $('#questions li').on({
               // au clic sur un élément
               click: function() {
-                  if (num<3) {
+                  
+                  if(num==3){
+                    flash_aide();
+                    return;
+                  }
+                  
+                  if (num<3 && $(this).find("input").val()=="") {
                     $(this).find("input").val(++num);
                     $("#num").text(3-num);
                   }
                   
-                  if(num==3)
+                  if(num==3){
                     $("#aide").text("Cliquez sur suivant pour valider");
+                  }
 
               }
           });

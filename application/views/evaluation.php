@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
-  <h1>Evaluation du <?php echo $result->title ; ?></h1>
+  <h1>Evaluation du <?php echo $title ; ?></h1>
 
   <h2>Question <?php echo $question->place." : ".$question->title ; ?></h2>
 
@@ -33,6 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	      echo form_hidden("id_result", $result->id_result);
 	      echo form_hidden("id_question", $question->id_question);
 	      echo form_hidden("n_question", $question->place);	
+	      echo form_hidden("pass", $pass);		      
 	
       ?>
 

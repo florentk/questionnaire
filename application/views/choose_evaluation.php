@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
-  <h1>Evaluer un révenu de base</h1>
+  <h1><?php echo $title ; ?></h1>
 
   <h2>Pas encore évalué</h2>
   <ul>

@@ -9,15 +9,20 @@ class Questionnaire extends CI_Controller {
     parent::__construct();
     $this->load->model('EvaluationModel');
 	  $this->load->helper('url');
+	  $this->load->helper('form');
   }
 
-  private function view_evaluation($id_result,$n_question) {
+  private function view_evaluation($id_result,$n_question,$pass) {
+  
+    if(!$this->EvaluationModel->validPassEvaluation($id_result,$pass))
+      return show_error("Erreur d'acces",403);
   
 		$result = $this->EvaluationModel->getResult($id_result);
 		$question = $this->EvaluationModel->getQuestion(2,$n_question);
 
 		$data['title'] = "Evaluation d'un Revenu de base";
 		$data['result'] = $result;	
+		$data['pass'] = $pass;
 		
 		$this->load->view('header',$data);	
 		
@@ -27,7 +32,6 @@ class Questionnaire extends CI_Controller {
 			$data['question'] = $question;
 			$data['choices'] = $choices	;		
 			
-	  		$this->load->helper('form');
 			$this->load->view('evaluation',$data);
 		}else{
 			$this->load->view('evaluation_end',$data);
@@ -52,7 +56,6 @@ class Questionnaire extends CI_Controller {
 			$data['question'] = $question;
 			$data['choices'] = $choices	;		
 			
-	    $this->load->helper('form');
 			$this->load->view('test',$data);
 		}else{
 			$data['scores'] = array_slice($this->EvaluationModel->computeScores($rating), 0, 3);
@@ -64,7 +67,7 @@ class Questionnaire extends CI_Controller {
 
 	}	
 	
-	public function choose_evaluation() {
+	private function choose_evaluation() {
 	
 		$data['result'] = $this->EvaluationModel->getResults();
 		$data["title"] = "Evaluation d'un revenu de base";
@@ -74,15 +77,34 @@ class Questionnaire extends CI_Controller {
 		$this->load->view('footer');		
 	}
 	
+	private function pass_evaluation($id_result) {
+	
+		$data['id_result'] = $id_result;
+		$data["title"] = "Evaluation d'un revenu de base";
+		
+		$this->load->view('header',$data);
+		$this->load->view('pass_evaluation',$data);
+		$this->load->view('footer');		
+	}	
+	
+	
+	
+	
+	///////////////////////////////////////
+	// PAGES
+	
 	//index.php/questionnaire/evaluation/?id_result=N
 	public function evaluation()
 	{
 		$id_result = $this->input->get("id_result");	
+		$pass = $this->input->get("pass");			
 		
-		if(isset($id_result))
-			$this->view_evaluation($id_result,1);
-		else
-			$this->choose_evaluation();
+		if(isset($id_result) && isset($pass))
+			$this->view_evaluation($id_result,1,$pass);
+		else if(isset($id_result))
+			$this->pass_evaluation($id_result);
+	  else
+	    $this->choose_evaluation();
 	}
 	
 	//index.php/questionnaire/test/
@@ -91,6 +113,8 @@ class Questionnaire extends CI_Controller {
 		$this->view_test(1);	
 	}	
 	
+	
+	//index.php/questionnaire/rdb_detail/
 	public function rdb_detail() 
 	{
 		$id_rdb_result = $this->input->get("id_rdb_result");	
@@ -111,6 +135,12 @@ class Questionnaire extends CI_Controller {
 	}
 	
 
+	
+	//
+  ////////////////////////////////////////////////
+  
+  ////////////////////////////////////////////////
+	// API
 
 
 	public function save_test()
@@ -140,7 +170,18 @@ class Questionnaire extends CI_Controller {
 	{
 		$id_result = $this->input->post("id_result");
 		$id_question = $this->input->post("id_question");	
-		$n_question = $this->input->post("n_question");			
+		$n_question = $this->input->post("n_question");	
+		$pass = $this->input->post("pass");			
+  
+    if(!$this->EvaluationModel->validPassEvaluation($id_result,$pass))
+      return show_error("Erreur d'acces",403);
+  
+		$result = $this->EvaluationModel->getResult($id_result);
+		$question = $this->EvaluationModel->getQuestion(2,$n_question);
+
+		$data['title'] = "Evaluation d'un Revenu de base";
+		$data['result'] = $result;	
+		$date['pass'] = $pass;
 		
 		$choices = $this->EvaluationModel->getChoicesFromQuestion($id_question);
 		
@@ -152,15 +193,16 @@ class Questionnaire extends CI_Controller {
 				if(isset($eval)){
 					$this->EvaluationModel->setEvaluation($id_result,$c->id_choice,(int) $eval);
 				} else {
-					$this->view_evaluation($id_result,$n_question);
+					$this->view_evaluation($id_result,$n_question,$pass);
 					return;
 				}			
 			}
 			
 		}
 			
-		$this->view_evaluation($id_result,$n_question + 1);		
+		$this->view_evaluation($id_result,$n_question + 1,$pass);		
 	}
-
+	//
+  /////////////////////////////////////////////////
 }
 ?>

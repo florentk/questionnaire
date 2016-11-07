@@ -41,6 +41,21 @@ class EvaluationModel extends CI_Model {
 		$query = $this->db->get_where('result_rdb', array('id_rdb_result' => $id_rdb_result));
 		return  $query->row();	
 	}
+	
+	public function validPassEvaluation($id_result,$pass){
+	  
+	  if($pass==="")
+	    return false;
+	  
+	  $query = $this->db->get_where('result', array(
+	    'id_result' => $id_result,
+	    'pass' => $pass
+	  ));
+	  	  
+	  //echo $this->db->last_query();
+	  	  		
+		return ($query->num_rows()==1);
+	}
 
 	public function setEvaluation($id_result,$id_choice,$rating){
 		$query = $this->db->get_where('evaluation', array(
