@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-
+<div class="container">
   <h1><?php echo $title ; ?></h1>
 
   <h2>Pas encore évalué</h2>
@@ -23,5 +23,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <?php endforeach;?> 
   </ul>
 
-
+</div>
 

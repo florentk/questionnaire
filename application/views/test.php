@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+
+function add_br($str) {
+  return str_replace(array("\r\n", "\n", "\r"), '<br/>', $str);
+}
 ?>
     <script>
       num = 0;
@@ -10,6 +14,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       }
       
       function init(){
+      
+        $("span.rank").text("");
+        $("ul#questions input").val("");
       
         num = 0;
         $("#aide").html('Cliquez sur <span id="num"> 3 </span> les propositions pour définir votre ordre de préference');
@@ -31,6 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   
                   if (num<3 && $(this).find("input").val()=="") {
                     $(this).find("input").val(++num);
+                    $(this).find("span.rank").text(num)
                     $("#num").text(3-num);
                   }
                   
@@ -64,7 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
       });
     </script>
-
+<div class="container">
     <h1>Quel Revenu de base me correspond le mieux ?</h1>
 
     <h2>Question <?php echo $question->place." : ".$question->title ; ?></h2>
@@ -80,7 +88,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    <?php $i = 0 ; ?>
       <?php foreach ($choices as $c):?>
 	      <li draggable=true>
-			     <?php echo form_input((string)$c->id_choice, '', array('autocomplete'  => 'off') ); ?> <span class="title"> <?php echo $c->title; ?> </span>
+			     <?php echo form_hidden((string)$c->id_choice/*, '', array('autocomplete'  => 'off')*/ ); ?> <span class="rank">  </span> <span class="title"> <?php echo $c->title; ?> </span> <p class="description"> <?php echo add_br($c->description); ?> </p>
         </li>
       <?php endforeach;?>  	
 	
@@ -105,4 +113,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <p><a href="test"> Recommencer le test </a></p>
 
-
+</div>

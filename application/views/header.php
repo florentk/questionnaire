@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Facebook OpenGraph meta informations -->
     <meta property="og:image" content="http://lille.bike/assets/img/mfrb.png" />
     <meta property="og:url" content="" />
-    <meta property="og:title" content="Choisi ton Revenue de base !" />
+    <meta property="og:title" content="Choisi ton Revenu de base !" />
     <meta property="og:site_name" content="Questionnaire Revenu de base" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content="Questionnaire pour choisir son revenu de base" />
@@ -45,4 +45,4 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        
       </header>
       
-      <div class="container">
+

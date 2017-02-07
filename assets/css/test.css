@@ -1,8 +1,19 @@
 
 ul#questions input {
-	width: 20px;
+	width: 30px;
 	text-align: center;
 }
+
+span.title {
+  font-weight:bold;
+  margin-left:10px;
+}
+
+p.description {
+  margin-left:20px;
+}
+
+
 
 [draggable] {
     -moz-user-select: none;
@@ -11,4 +22,44 @@ ul#questions input {
     user-select: none;
 }
  
+table#versions {
+	table-layout:fixed;
+ 	/*word-break: break-all;*/
+ 	border: 1px solid black;	
+ 	width: 1840px;
+    border-collapse: collapse; 	
+}
 
+
+ 
+table#versions  td, th {
+	/*white-space: nowrap;*/
+	overflow: hidden;
+ 	border: 1px solid black;	
+    padding: 5px;		
+}
+
+table#versions  th {
+	background-color:grey;
+	color:white;
+}
+
+table#versions  tr:nth-child(odd) {
+	background-color:yellow;
+}
+ 
+table#versions  td.cell_small {
+ width: 5%;
+}
+
+table#versions  td.cell_normal {
+ width: 10%;
+}
+
+table#versions  td.cell_big {
+ width: 15%;
+}
+
+table#versions  td.cell_huge {
+ width: 20%;
+}

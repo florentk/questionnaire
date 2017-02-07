@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
+<div class="container">
   <h1><?php echo $title ; ?></h1>
   
   <form method="get" accept-charset="utf-8" action="evaluation">
@@ -14,4 +15,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </p>
   <button type="submit" class="btn btn-success">Evaluer</button>
   
-</form>
+  </form>
+
+</div>

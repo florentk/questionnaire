@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
-
+<div class="container">
 <h2><?php echo "$rdb->name" ?></h2>
 <ul>
     <li>  <b> Supporté par </b> : <?php echo "$rdb->supporting" ?> </li>
@@ -14,5 +14,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <li>  <b> Financement </b> : <?php echo "$rdb->funding" ?> </li>    
     <li>  <b> Allocations </b> : <?php echo "$rdb->allocations" ?> </li>    
     <li>  <b> Liens </b> : <?php echo "$rdb->links" ?> </li>    
-<ul>
+</ul>
 
+</div>

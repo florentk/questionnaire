@@ -32,9 +32,19 @@ class Questionnaire extends CI_Controller {
 			$data['question'] = $question;
 			$data['choices'] = $choices	;		
 			
-			$this->load->view('evaluation',$data);
+			$this->load->view('evaluation_header',$data);			
+			
+			if($question->mode==1)
+			  $this->load->view('evaluation_effects',$data);
+			else if($question->mode==2)
+			  $this->load->view('evaluation_binary',$data);
+			else if ($question->mode==3)		
+			  $this->load->view('evaluation_one_choice',$data);
+		
+			$this->load->view('evaluation_footer',$data);			
 		}else{
 			$this->load->view('evaluation_end',$data);
+			$this->view_rdb_edit_detail($result->id_result_ext);
 		}
 		
 		$this->load->view('footer',$data);
@@ -87,8 +97,56 @@ class Questionnaire extends CI_Controller {
 		$this->load->view('footer');		
 	}	
 	
+	private function get_choice_eval($question,$c)
+	{
+			if($question->mode==1)
+			  return $this->input->post("$c->id_choice");
+			else if($question->mode==2)
+			  return $this->input->post("$c->id_choice");
+			else if ($question->mode==3){	
+				$choice = $this->input->post("choice");
+				
+				if(isset($choice)){
+					if($choice == $c->id_choice)	
+						return 3;
+					else
+						return 0;
+				}
+				return;
+			}
+			
+	}	
 	
 	
+	private function view_rdb_edit_detail($id_rdb_result){
+	  if($id_rdb_result==NULL){
+       $id_rdb_result = $this->input->post("id_rdb_result");
+       if($id_rdb_result==NULL){
+        show_error("Parametre incorect", 406);
+        return;
+       }else {
+ 	      $supporting = $this->input->post("supporting");
+	      $name = $this->input->post("name");
+	      $motivation = $this->input->post("motivation");
+	      $sum = $this->input->post("sum");
+	      $use_case = $this->input->post("use_case");
+	      $funding = $this->input->post("funding");
+	      $reforms = $this->input->post("reforms");
+	      $philosophy = $this->input->post("philosophy");
+	      $allocations = $this->input->post("allocations");
+	      $links = $this->input->post("links");  
+	      
+	      $this->EvaluationModel->setResultDetail($id_rdb_result, $supporting, $name, $motivation, $sum, $use_case, $funding, $reforms, $philosophy, $allocations, $links);
+	            
+       }
+	  }
+	  
+	  $detail = $this->EvaluationModel->getResultDetail($id_rdb_result);  
+
+	  $data["rdb"] = $detail;	 
+	
+		$this->load->view('edit_detail',$data);
+	}	
 	
 	///////////////////////////////////////
 	// PAGES
@@ -127,6 +185,32 @@ class Questionnaire extends CI_Controller {
 		$this->load->view('result_detail',$data);
 		$this->load->view('footer');		
 	}
+	
+	//index.php/questionnaire/rdb_edit_detail?id_rdb_result=id
+	public function rdb_edit_detail() 
+	{
+		$data["title"] = "Detail d'une version";
+		$this->load->view('header',$data);
+		$this->view_rdb_edit_detail($this->input->get("id_rdb_result"));
+		$this->load->view('footer');	
+
+	}
+	
+	//index.php/questionnaire/rdb_tab/
+	public function rdb_tab()
+	{
+
+		$versions = $this->EvaluationModel->getAllResultDetail();
+		
+		$data["versions"] = $versions;
+		$data["title"] = "Résumé des versions d'un revenu de base";
+		
+		$this->load->view('header',$data);
+		$this->load->view('result_tab',$data);
+		$this->load->view('footer');	
+	
+	//
+	}	
 
 	//index.php
 	public function index()
@@ -141,7 +225,6 @@ class Questionnaire extends CI_Controller {
   
   ////////////////////////////////////////////////
 	// API
-
 
 	public function save_test()
 	{
@@ -188,7 +271,7 @@ class Questionnaire extends CI_Controller {
 		if(isset($choices)) {
 		
 			foreach ($choices as $c){
-				$eval = $this->input->post("$c->id_choice");
+				$eval = $this->get_choice_eval($question,$c);
 				
 				if(isset($eval)){
 					$this->EvaluationModel->setEvaluation($id_result,$c->id_choice,(int) $eval);

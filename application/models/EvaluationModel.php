@@ -36,11 +36,34 @@ class EvaluationModel extends CI_Model {
 		$query = $this->db->get('choice');
 		return $query->result();
 	}	
+
+	public function getAllResultDetail(){
+		$query = $this->db->get('result_rdb');
+		return  $query->result();	
+	}	
 	
 	public function getResultDetail($id_rdb_result){
 		$query = $this->db->get_where('result_rdb', array('id_rdb_result' => $id_rdb_result));
 		return  $query->row();	
 	}
+	
+	public function setResultDetail($id_rdb_result, $supporting, $name, $motivation, $sum, $use_case, $funding, $reforms, $philosophy, $allocations, $links){
+	
+	  $this->db->replace('result_rdb', array('id_rdb_result' => $id_rdb_result,
+	      'supporting'=>$supporting,
+	      'name'=>$name,
+	      'motivation'=>$motivation,
+	      'sum'=>$sum,
+	      'use_case'=>$use_case,
+	      'funding'=>$funding,
+	      'reforms'=>$reforms,
+	      'philosophy'=>$philosophy,
+	      'allocations'=>$allocations,
+	      'links'=>$links
+	    ));
+
+	}	
+	
 	
 	public function validPassEvaluation($id_result,$pass){
 	  
@@ -109,7 +132,7 @@ class EvaluationModel extends CI_Model {
 
 
 
-
+//http://florent.kaisser.name/questionnaire/index.php/questionnaire/rdb_tab
  
   
   public function computeScores($ranks){
@@ -124,7 +147,7 @@ class EvaluationModel extends CI_Model {
 											array( 
 												'score' => $s,
 												'title' => $res->title,
-												'id_result' => $res->id_result
+												'id_rdb_result' => $res->id_result_ext
 				));
 		}
 		
