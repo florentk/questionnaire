@@ -1,6 +1,6 @@
 Cette application est un questionnaire pour évaluer différentes version d'un revenu de base. Une fois chaque version évalué, un utilisateur peut remplir un questionnaire pour connaitre les versions auquelles il est le plus proche.
 
-L'application utilise le _framework_<https://codeigniter.com/>_ PHP CodeIgniter et est structuré selon l'architecture MVC.
+L'application utilise le framework <https://codeigniter.com/> PHP CodeIgniter et est structuré selon l'architecture MVC.
 
 Vous pouvez le tester en ligne à cette adresse : http://florent.kaisser.name/questionnaire/index.php/questionnaire/test
 
