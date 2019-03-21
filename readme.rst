@@ -1,70 +1,22 @@
-###################
-What is CodeIgniter
-###################
+Cette application est un questionnaire pour évaluer différentes version d'un revenu de base. Une fois chaque version évalué, un utilisateur peut remplir un questionnaire pour connaitre les versions auquelles il est le plus proche.
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+L'application utilise le _framework_<https://codeigniter.com/>_ PHP CodeIgniter et est structuré selon l'architecture MVC.
 
-*******************
-Release Information
-*******************
+Vous pouvez le tester en ligne à cette adresse : http://florent.kaisser.name/questionnaire/index.php/questionnaire/test
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
+============
+L'évaluation
+============
+L'évaluation s'effectue à partir de cette page : index.php/questionnaire/evaluation
+Pour chaque question sur une version du revenu base, un "taux" d'importance est affecté compris netre 0 et 5. 1 sans aucune importane, 5 très important. Ce taux est entregistré dans la table "evaluation".
 
-**************************
-Changelog and New Features
-**************************
+=======
+Le test
+=======
+L'utilisateur tri 3 réponses par ordre de préférence de se qu'il attend d'un revenu de base à partir de cette page : index.php/questionnaire/test
+Le résultat du test est calculé en multipliant l'ordre de préférence par le taux correspondant pour chaque évaluation d'une version. Le score final de chaque version est alors la somme de ses ordre de préférences pondérés par le taux correspondant. On obtient donc un score pour chaque version et on peut présenter à l'utilisateur le résultat comme les 3 versions ayant obetenu le meilleurs score
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
-
-*******************
-Server Requirements
-*******************
-
-PHP version 5.6 or newer is recommended.
-
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
-
-************
-Installation
-************
-
-Please see the `installation section <https://codeigniter.com/user_guide/installation/index.html>`_
-of the CodeIgniter User Guide.
-
-*******
-License
-*******
-
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
-
-*********
-Resources
-*********
-
--  `User Guide <https://codeigniter.com/docs>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community IRC <https://webchat.freenode.net/?channels=%23codeigniter>`_
-
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
-
-***************
-Acknowledgement
-***************
-
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
+==========================================
+Détails d'une versions d'un revenu de base
+==========================================
+L'ensemble des characteristiques d'un revenu de base peut tre consulté dans un tableau : index.php/questionnaire/rdb_tab
