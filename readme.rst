@@ -18,7 +18,7 @@ L'utilisateur tri 3 réponses par ordre de préférence de se qu'il attend d'un 
 
 Le résultat du test est calculé en multipliant l'ordre de préférence par le taux correspondant pour chaque évaluation d'une version. Le score final de chaque version est alors la somme de ces ordres de préférences pondérés par le taux correspondant. 
 
-On obtient donc un score pour chaque version et on peut présenter à l'utilisateur le résultat comme les 3 versions ayant obetenu le meilleurs score
+On obtient donc un score pour chaque version et on peut présenter à l'utilisateur le résultat comme les 3 versions ayant obetenues le meilleurs score
 
 ==========================================
 Détails d'une versions d'un revenu de base
